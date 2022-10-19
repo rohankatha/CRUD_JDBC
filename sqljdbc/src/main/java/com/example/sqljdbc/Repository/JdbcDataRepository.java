@@ -17,24 +17,24 @@ public class JdbcDataRepository implements DataRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public int save(Data tutorial) {
-        return jdbcTemplate.update("INSERT INTO tutorials (title, description, published) VALUES(?,?,?)",
-                new Object[] { tutorial.getTitle(), tutorial.getDescription(), tutorial.isPublished() });
+    public int save(Data temp) {
+        return jdbcTemplate.update("INSERT INTO testdb (title, description, published) VALUES(?,?,?)",
+                new Object[] { temp.getTitle(), temp.getDescription(), temp.isPublished() });
     }
 
     @Override
-    public int update(Data tutorial) {
-        return jdbcTemplate.update("UPDATE tutorials SET title=?, description=?, published=? WHERE id=?",
-                new Object[] { tutorial.getTitle(), tutorial.getDescription(), tutorial.isPublished(), tutorial.getId() });
+    public int update(Data temp) {
+        return jdbcTemplate.update("UPDATE testdb SET title=?, description=?, published=? WHERE id=?",
+                new Object[] { temp.getTitle(), temp.getDescription(), temp.isPublished(), temp.getId() });
     }
 
     @Override
     public Data findById(Long id) {
         try {
-            Data tutorial = jdbcTemplate.queryForObject("SELECT * FROM tutorials WHERE id=?",
+            Data temp = jdbcTemplate.queryForObject("SELECT * FROM testdb WHERE id=?",
                     BeanPropertyRowMapper.newInstance(Data.class), id);
 
-            return tutorial;
+            return temp;
         } catch (IncorrectResultSizeDataAccessException e) {
             return null;
         }
@@ -42,16 +42,16 @@ public class JdbcDataRepository implements DataRepository {
 
     @Override
     public int deleteById(Long id) {
-        return jdbcTemplate.update("DELETE FROM tutorials WHERE id=?", id);
+        return jdbcTemplate.update("DELETE FROM testdb WHERE id=?", id);
     }
 
     @Override
     public List<Data> findAll() {
-        return jdbcTemplate.query("SELECT * from tutorials", BeanPropertyRowMapper.newInstance(Data.class));
+        return jdbcTemplate.query("SELECT * from testdb", BeanPropertyRowMapper.newInstance(Data.class));
     }
 
     @Override
     public int deleteAll() {
-        return jdbcTemplate.update("DELETE from tutorials");
+        return jdbcTemplate.update("DELETE from temps");
     }
 }
