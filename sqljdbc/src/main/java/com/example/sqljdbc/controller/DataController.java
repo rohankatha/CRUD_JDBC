@@ -28,30 +28,26 @@ public class DataController {
     DataRepository obj;
 
     @GetMapping("/dataapi")
-    public List<Data> getAllStudents() {
+    public List<Data> getAllData() {
         return obj.findAll();
     }
 
     @PostMapping("/dataapi")
-    public String Addition(@RequestBody Data student) {
-        obj.save(student);
-        return "Student was successfully added";
+    public String Addition(@RequestBody Data temp) {
+        obj.save(temp);
+        return "Yes";
     }
 
     @GetMapping("/dataapi/{id}")
-    public Data Retrieval(@PathVariable("sid") long id) {
+    public Data Retrieval(long id) {
         return obj.findById(id);
     }
 
     @PutMapping("/dataapi/{id}")
-    public String Update( long id, @RequestBody Data student) {
-        Data existingStudent = obj.findById(id);
-        if(existingStudent == null) {
-            return "No such student";
-        } else {
-            obj.update(student);
-            return "Student details updated successfully";
-        }
+    public String Update( long id, @RequestBody Data temp) {
+        
+            obj.update(temp);
+           
     }
 
     @DeleteMapping("/dataapi/{id}")
